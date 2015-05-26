@@ -1,0 +1,29 @@
+{
+  "name": "fullscreen-api",
+  "version": "0.5.0",
+  "authors": [
+    "Vincent Guillou <vin.guillou@gmail.com>"
+  ],
+  "description": "A simple Polymer based Web Component wrapper for the HTML5 full screen API",
+  "keywords": [
+    "fullscreen", "full-screen", "full screen", "polymer", "web-components", "web-component", "web components", "web component", "html5", "html 5"
+  ],
+  "main": "fullscreen-api.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "res"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vguillou/fullscreen-api.git"
+  },
+  "dependencies": {
+    "webcomponentsjs": "^0.5",
+    "polymer": "Polymer/polymer#^0.5"
+  }
+}
