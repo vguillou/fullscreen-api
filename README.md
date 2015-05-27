@@ -102,7 +102,7 @@ Polymer({
 
 ## Demo!
 
-[Link](http://vguillou.github.io/webcomponents/fullscreen-api/demo.html)
+[Link](https://vguillou.github.io/webcomponents/fullscreen-api/demo.html)
 
 ## License
 
