@@ -132,6 +132,17 @@ Learn more : https://github.com/vguillou/fullscreen-api
           _toggleFullscreen(this.target);
         },
 
+        /**
+         * Exit full screen mode (if toggled)
+         *
+         * @method exitFullscreen
+         */
+        exitFullscreen: function() {
+          if (this.fullscreen) {
+            _toggleFullscreen(this.target);
+          }
+        },
+
         ready: function() {
           if (_isFullscreenEnabled() && _instanceCount === 0) {
             document.addEventListener('fullscreenchange', this._fullscreenChanged.bind(this));
