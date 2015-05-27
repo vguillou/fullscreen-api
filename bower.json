@@ -23,7 +23,6 @@
     "url": "git://github.com/vguillou/fullscreen-api.git"
   },
   "dependencies": {
-    "webcomponentsjs": "^0.5",
     "polymer": "Polymer/polymer#^0.5"
   }
 }
