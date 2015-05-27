@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>fullscreen-element demo</title>
+	<title>fullscreen-api demo</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="theme-color" content="#7986cb">
@@ -75,8 +75,17 @@
 	<script>
 		window.addEventListener('polymer-ready', function() {
 	      var fsapi = document.querySelector('#fsapi');
+	      
+	      // Testing if full screen mode is available
 	      if (!fsapi.fullscreenAvailable) {
-	      	document.body.innerHTML = 'Your browser does not support the HTML5 full screen API... ( ᵒ̴̶̷̥́ _ᵒ̴̶̷̣̥̀ )';
+	      	// If in a iframe, let's show a link to the working demo
+	      	if (window.location !== window.parent.location) {
+	      		document.body.innerHTML = 'This demo is embedded in an iframe that does not allow full screen mode.<br/>It must have the \'allowfullscreen\', \'webkitallowfullscreen\' and/or \'mozallowfullscreen\' attributes in order to work... ( ᵒ̴̶̷̥́ _ᵒ̴̶̷̣̥̀ )<br/><br/><a href=\"https://vguillou.github.io/webcomponents/fullscreen-api/demo.html\" target="_blank">You can fin the real demo here.</a><br/><br/><a href=\"https://vguillou.github.io/webcomponents/fullscreen-api/demo_iframe.html\" target="_blank">And a working iframe demo there.</a>';
+	      	}
+	      	// Otherwise, well we can't do much about it... :(
+	      	else {
+	      		document.body.innerHTML = 'Your browser does not support the HTML5 full screen API... ( ᵒ̴̶̷̥́ _ᵒ̴̶̷̣̥̀ )';
+	      	}
 	      }
 	    });
 
@@ -93,6 +102,5 @@
 			fsapi.toggleFullscreen();
 		}
 	</script>
-	
 </body>
 </html>
