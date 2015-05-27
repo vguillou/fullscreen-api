@@ -103,6 +103,7 @@ Polymer({
 ## Demo!
 
 [Link](https://vguillou.github.io/webcomponents/fullscreen-api/demo.html)
+
 [Iframe demo](https://vguillou.github.io/webcomponents/fullscreen-api/demo_iframe.html)
 
 
