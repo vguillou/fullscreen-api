@@ -38,68 +38,21 @@ Exit full screen mode (if toggled).
 ## Example 1
 
 ```html
-<fullscreen-api id="fsapi"></fullscreen-api>
+<template is="dom-bind">
+	<fullscreen-api id="fsapi" fullscreen-available="{{fullscreenAvailable}}"></fullscreen-api>
 
-<button type="button" onclick="goFullscreen()">Display this page in full screen mode</button>
+	<button type="button" onclick="goFullscreen()" hidden$="[[!fullscreenAvailable]]">Display this page in full screen mode</button>
 
-<script>
-window.addEventListener('polymer-ready', function() {
-    var fsapi = document.querySelector('#fsapi');
-    if (!fsapi.fullscreenAvailable) {
-      document.body.innerHTML = 'Your browser does not support the HTML5 full screen API... :(';
-    }
-  });
-
-function goFullscreen() {
-  var fsapi = document.querySelector('#fsapi');
-  fsapi.toggleFullscreen();
-}
-</script>
-```
-
-## Example 2 (with data-binding, inside a Polymer template)
-
-```html
-<style>
-	img {
-	  width: 300px;
-	  height: 200px;
-	}
-
-	img:-webkit-full-screen {
-	  width: 100%;
-	  height: auto;
-	}
-	img:-moz-full-screen {
-	  width: 100%;
-	  height: auto;
-	}
-	img:-ms-fullscreen {
-	  width: 100%;
-	  height: auto;
-	}
-	img:full-screen {
-	  width: 100%;
-	  height: auto;
-	}
-	img:fullscreen {
-	  width: 100%;
-	  height: auto;
-	}
-</style>
-
-<fullscreen-api id="fsapi" target="{{$.photo}}"></fullscreen-api>
-
-<img id="photo" src="my_photo.jpg" on-click="{{goFullscreen}}" alt="My Photo"></img>
+	<div id="errorDiv" hidden$="[[fullscreenAvailable]]">
+		Your browser does not support the HTML5 full screen API... :(
+	</div>
+</template>
 
 <script>
-Polymer({
-	...
-	goFullscreen: function() {
-		this.$.fsapi.toggleFullscreen();
+	function goFullscreen() {
+	  var fsapi = document.querySelector('#fsapi');
+	  fsapi.toggleFullscreen();
 	}
-	...
-});
 </script>
 ```
 

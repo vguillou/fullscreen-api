@@ -15,7 +15,7 @@
 			&& 'content' in document.createElement('template')) {
 			// We're using a browser with native WC support!
 		} else {
-			document.write('<script src="../webcomponentsjs/webcomponents.js"><\/script>');
+			document.write('<script src="../webcomponentsjs/webcomponents-lite.js"><\/script>');
 		}
 	</script>
 	
@@ -58,37 +58,42 @@
 	</style>
 
 </head>
-<body unresolved fullbleed>
+<body>
+	<template is="dom-bind">
+		<fullscreen-api id="fsapi" fullscreen-available="{{fullscreenAvailable}}" fullscreen="{{fullscreenToggled}}"></fullscreen-api>
 
-	<fullscreen-api id="fsapi"></fullscreen-api>
+		<div id="demoDiv" hidden$="[[!fullscreenAvailable]]">
+			<button type="button" onclick="pageFullscreen()">Toggle full screen</button>
 
-	<button type="button" onclick="pageFullscreen()">Display this page in full screen mode</button>
+			<div>
+				<img id="img1" src="res/huelgoat.jpg" onclick="elementFullscreen('img1')" alt="Huelgoat"></img>
+				<img id="img2" src="res/ile-vierge.jpg" onclick="elementFullscreen('img2')" alt="L'île vierge"></img>
+				<img id="img3" src="res/ploumanach.jpg" onclick="elementFullscreen('img3')" alt="Ploumanac'h"></img>
+				<img id="img4" src="res/saint-michel.jpg" onclick="elementFullscreen('img4')" alt="Le mont Saint-Michel de Saint-Rivoal"></img>
+				<img id="img5" src="res/yeun-elez.jpg" onclick="elementFullscreen('img5')" alt="La vallée du Yeun-Elez"></img>
+			</div>
+		</div>
 
-	<div>
-		<img id="img1" src="res/huelgoat.jpg" onclick="elementFullscreen('img1')" alt="Huelgoat"></img>
-		<img id="img2" src="res/ile-vierge.jpg" onclick="elementFullscreen('img2')" alt="L'île vierge"></img>
-		<img id="img3" src="res/ploumanach.jpg" onclick="elementFullscreen('img3')" alt="Ploumanac'h"></img>
-		<img id="img4" src="res/saint-michel.jpg" onclick="elementFullscreen('img4')" alt="Le mont Saint-Michel de Saint-Rivoal"></img>
-		<img id="img5" src="res/yeun-elez.jpg" onclick="elementFullscreen('img5')" alt="La vallée du Yeun-Elez"></img>
-	</div>
+		<div id="errorDiv" hidden$="[[fullscreenAvailable]]">
+			The HTML5 full screen API is unavailable.
+			<br/>
+			( ᵒ̴̶̷̥́ _ᵒ̴̶̷̣̥̀ )
+			<br/>
+			<br/>
+			Either :
+			<ul>
+				<li>Your browser does not support it (Safari on iOS for instance)</li>
+				<li>This demo is embedded in an iframe that does not allow full screen mode.
+					<br/>It must have the 'allowfullscreen', 'webkitallowfullscreen' and/or 'mozallowfullscreen' attributes in order to work.
+					<br/><br/>
+					<a href="https://vguillou.github.io/webcomponents/fullscreen-api/demo.html" target="_blank">You can find the demo here (no iframe involved)</a> or <a href="https://vguillou.github.io/webcomponents/fullscreen-api/demo_iframe.html" target="_blank">a working iframe demo there.</a>
+				</li>
+			</ul>
+		</div>
+
+	</template>
 
 	<script>
-		window.addEventListener('polymer-ready', function() {
-	      var fsapi = document.querySelector('#fsapi');
-	      
-	      // Testing if full screen mode is available
-	      if (!fsapi.fullscreenAvailable) {
-	      	// If in a iframe, let's show a link to the working demo
-	      	if (window.location !== window.parent.location) {
-	      		document.body.innerHTML = 'This demo is embedded in an iframe that does not allow full screen mode.<br/>It must have the \'allowfullscreen\', \'webkitallowfullscreen\' and/or \'mozallowfullscreen\' attributes in order to work... ( ᵒ̴̶̷̥́ _ᵒ̴̶̷̣̥̀ )<br/><br/><a href=\"https://vguillou.github.io/webcomponents/fullscreen-api/demo.html\" target="_blank">You can fin the real demo here.</a><br/><br/><a href=\"https://vguillou.github.io/webcomponents/fullscreen-api/demo_iframe.html\" target="_blank">And a working iframe demo there.</a>';
-	      	}
-	      	// Otherwise, well we can't do much about it... :(
-	      	else {
-	      		document.body.innerHTML = 'Your browser does not support the HTML5 full screen API... ( ᵒ̴̶̷̥́ _ᵒ̴̶̷̣̥̀ )';
-	      	}
-	      }
-	    });
-
 		function pageFullscreen() {
 			var fsapi = document.querySelector('#fsapi');
 			fsapi.target = document.documentElement;
