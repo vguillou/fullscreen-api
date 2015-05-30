@@ -35,7 +35,7 @@ or Polymer's 'on-click' handler).
 * **exitFullscreen()** :
 Exit full screen mode (if toggled).
 
-## Example 1
+## Example
 
 ```html
 <template is="dom-bind">
