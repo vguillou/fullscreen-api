@@ -10,6 +10,10 @@ Note that this method MUST be triggered directly by user interaction
 If no 'target' is set, the whole page (more specifically
 'document.documentElement') while be displayed full screen.
 
+### Compatibility
+
+Polymer 0.5.X
+
 ### Attributes
 
 * **target** :
