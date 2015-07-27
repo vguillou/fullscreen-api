@@ -42,8 +42,6 @@ Usage :
 -->
 <script>
   (function () {
-    var _instanceCount = 0;
-
     function _isFullscreenEnabled() {
       return (document.fullscreenEnabled || 
           document.webkitFullscreenEnabled || 
@@ -154,20 +152,18 @@ Usage :
       },
 
       ready: function() {
-        if (_isFullscreenEnabled() && _instanceCount === 0) {
+        if (_isFullscreenEnabled()) {
           document.addEventListener('fullscreenchange', this._fullscreenChanged.bind(this));
           document.addEventListener('webkitfullscreenchange', this._fullscreenChanged.bind(this));
           document.addEventListener('mozfullscreenchange', this._fullscreenChanged.bind(this));
           document.addEventListener('MSFullscreenChange', this._fullscreenChanged.bind(this));
         }
-        _instanceCount++;
         this._fullscreenChanged();
         this._setFullscreenAvailable(_isFullscreenEnabled());
       },
 
       detached: function() {
-        _instanceCount--;
-        if (_isFullscreenEnabled() && _instanceCount === 0) {
+        if (_isFullscreenEnabled()) {
           document.removeEventListener('fullscreenchange', this._fullscreenChanged);
           document.removeEventListener('webkitfullscreenchange', this._fullscreenChanged);
           document.removeEventListener('mozfullscreenchange', this._fullscreenChanged);
