@@ -60,7 +60,7 @@
 </head>
 <body>
 	<template is="dom-bind">
-		<fullscreen-api id="fsapi" fullscreen-available="{{fullscreenAvailable}}" fullscreen="{{fullscreenToggled}}"></fullscreen-api>
+		<fullscreen-api id="fsapi" fullscreen-available="{{fullscreenAvailable}}" fullscreen="{{fullscreenToggled}}" on-fullscreen-changed="onFullscreenChanged"></fullscreen-api>
 
 		<div id="demoDiv" hidden$="[[!fullscreenAvailable]]">
 			<button type="button" onclick="pageFullscreen()">Toggle full screen</button>
@@ -106,6 +106,15 @@
 			fsapi.target = target;
 			fsapi.toggleFullscreen();
 		}
+
+		var scope = document.querySelector('template[is="dom-bind"]');
+
+	  scope.onFullscreenChanged = function(e) {
+	  	var fsapi = document.querySelector('#fsapi');
+	  	if (fsapi && e.detail.value !== undefined) {
+				console.log('Fullscreen mode ' + (e.detail.value ? 'starts' : 'stops') + ' for the element :', fsapi.target);
+			}
+	  };
 	</script>
 </body>
 </html>
