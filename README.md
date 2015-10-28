@@ -2,7 +2,9 @@
 
 _A simple Polymer based Web Component wrapper for the HTML5 full screen API._
 
-It lets you define which element to display in full screen mode
+Please refer to the <a href="https://vguillou.github.io/webcomponents/fullscreen-api/">component page</a> for more informations.
+
+This Polymer Web-Component lets you define which element to display in full screen mode
 (via the 'target' attribute) and toggle normal/full screen
 mode by calling the 'toggleFullscreen()' method.
 Note that this method MUST be triggered directly by user interaction
