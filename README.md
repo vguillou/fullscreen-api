@@ -4,10 +4,13 @@ _A simple Polymer based Web Component wrapper for the HTML5 full screen API._
 
 Please refer to the <a href="https://vguillou.github.io/webcomponents/fullscreen-api/">component page</a> for more informations.
 
-* **fullscreen-api**: The most flexible, comes without UI but with bindable attributes. Ideal when you need to dynamically set the element to display fullscreen (an image gallery for example).
+
+### Available Web Components
+
+* **fullscreen-api**: The most flexible, comes without UI but with bindable attributes. Ideal when you need to dynamically set the element to display fullscreen (e.g. building and image gallery).
 * **fullscreen-icon-button**: Prepackaged material icon-button. Drop it on your page, tap it and it works. 
 
-Both elements let you define what to display in full screen mode
+Both elements share a common API and let you define what to display in full screen mode
 (via the `target` attribute) and toggle normal/full screen
 mode by calling the `toggleFullscreen()` method.
 
@@ -16,11 +19,6 @@ Note that this method MUST be triggered directly by user interaction
 If no `target` is set, the whole page (more specifically
 `document.documentElement`) will be displayed full screen.
 
-The element also provides 2 read-only flags as attribute:
-* `fullscreenAvailable`: set to `true` if the browser supports
-   HTML5's full screen API (Safari on iOS does not).
-* `fullscreen`: set to `true` if an element is currently displayed in
-   full screen mode.
 
 ### Attributes
 
@@ -48,7 +46,7 @@ or Polymer's 'on-click' handler).
 * **exitFullscreen()** :
 Exit full screen mode (if toggled).
 
-## Example
+## Examples
 
 * **fullscreen-api**
 
@@ -86,4 +84,4 @@ Exit full screen mode (if toggled).
 
 ## License
 
-[MIT License](./LICENSE.md)
+[MIT License](https://github.com/vguillou/fullscreen-api/blob/master/LICENSE.md)
