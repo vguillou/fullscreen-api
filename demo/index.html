@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+<head>
+  <title>fullscreen-api demo</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="msapplication-TileColor" content="#ff5722">
+  <meta name="theme-color" content="#ff5722">
+	
+	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="../../polymer/polymer.html">
+	<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-icons/iron-icons.html">
+  <link rel="import" href="../../paper-styles/color.html">
+	<link rel="import" href="../fullscreen-api.html">
+	<link rel="import" href="../fullscreen-icon-button.html">
+
+	<style is="custom-style" include="demo-pages-shared-styles">
+		body {
+      font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 10px;
+      overflow-y: scroll;
+    }
+    #noFullscreenErrorMessage {
+      display: none;
+    }
+    .vertical-section-container {
+      max-width: 700px;
+    }
+	</style>
+
+</head>
+<body unresolved>
+
+  <div id="noFullscreenErrorMessage" class="vertical-section-container centered">
+    The HTML5 full screen API is unavailable.
+    <br/>
+    ( ᵒ̴̶̷̥́ _ᵒ̴̶̷̣̥̀ )
+    <br/>
+    <br/>
+    Either :
+    <ul>
+      <li>Your browser does not support it (Safari on iOS for instance)</li>
+      <li>This demo is embedded in an iframe that does not allow full screen mode.
+        <br/>It must have the 'allowfullscreen', 'webkitallowfullscreen' and/or 'mozallowfullscreen' attributes in order to work.
+        <br/><br/>
+        <a href="https://vguillou.github.io/webcomponents/fullscreen-api/demo/index.html" target="_blank">You can find the demo here (no iframe involved)</a> or <a href="https://vguillou.github.io/webcomponents/fullscreen-api/demo/iframe.html" target="_blank">a working iframe demo there.</a>
+      </li>
+    </ul>
+  </div>
+
+	<div id="demoContainer" class="vertical-section-container centered">
+
+		<h1>&lt;fullscreen-icon-button&gt;</h1>
+
+		<h3>The simplest &lt;fullscreen-icon-button&gt;, takes care of everything for you</h3>
+    <demo-snippet class="centered-demo">
+      <template>
+      	<fullscreen-icon-button title="fullscreen" tabindex="0"></fullscreen-icon-button>
+      </template>
+    </demo-snippet>
+
+    <h3>&lt;fullscreen-icon-button&gt; can be styled using all the mixins from <a href="https://elements.polymer-project.org/elements/paper-icon-button">&lt;paper-icon-button&gt;</a></h3>
+    <demo-snippet class="centered-demo">
+      <template>
+        <style is="custom-style">
+	        fullscreen-icon-button.red,
+          fullscreen-icon-button.blue,
+          fullscreen-icon-button.giant {
+			    	margin: 16px;
+			    }
+
+          fullscreen-icon-button.red {
+          	color: var(--paper-red-500);
+          	--paper-icon-button-ink-color: var(--paper-red-500);
+          }
+
+          fullscreen-icon-button.blue {
+            color: white;
+				    background-color: var(--paper-light-blue-500);
+				    border-radius: 3px;
+				    padding: 2px;
+				  }
+
+          fullscreen-icon-button.giant {
+          	width: 100px;
+    				height: 100px;
+          }
+        </style>
+
+        <fullscreen-icon-button class="red" title="fullscreen" tabindex="0" alt="fullscreen"></fullscreen-icon-button>
+        <fullscreen-icon-button class="blue" icon="icons:thumb-up" icon-exit="icons:thumb-down" title="fullscreen" tabindex="1" noink alt="fullscreen"></fullscreen-icon-button>
+        <fullscreen-icon-button class="giant" icon="icons:zoom-in" icon-exit="icons:zoom-out" title="fullscreen" tabindex="2" alt="fullscreen"></fullscreen-icon-button>
+      </template>
+    </demo-snippet>
+
+    <h3>&lt;fullscreen-icon-button&gt; and &lt;fullscreen-api&gt; can automatically find the element to be displayed full screen if you set a selector to their `target` attribute</h3>
+    <demo-snippet class="centered-demo">
+      <template>
+        <style is="custom-style">
+        	.imgWithButton {
+            width: 300px;
+            height: 200px;
+            position: relative;
+            background: black no-repeat 50% 50%/cover;
+          }
+          .imgWithButton:-webkit-full-screen {
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+          }
+          .imgWithButton:-moz-full-screen {
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+          }
+          .imgWithButton:-ms-fullscreen {
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+          }
+          .imgWithButton:full-screen {
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+          }
+          .imgWithButton:fullscreen {
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+          }
+          .imgWithButton > fullscreen-icon-button {
+          	color: black;
+            --paper-icon-button-ink-color: black;
+            background-color: white;
+            border-radius: 50%;
+          	position: absolute;
+          	right: 8px;
+          	bottom: 8px;
+          }
+        </style>
+
+        <div id="img1" class="imgWithButton" style="background-image: url('huelgoat.jpg');" alt="Huelgoat">
+          <fullscreen-icon-button target="#img1" title="fullscreen" tabindex="0" alt="fullscreen"></fullscreen-icon-button>
+        </div>
+
+        <div id="img2" class="imgWithButton" style="background-image: url('rotheneuf.jpg');" alt="Les rochers sculptés de Rothéneuf">
+  				<fullscreen-icon-button target="#img2" title="fullscreen" tabindex="1" alt="fullscreen"></fullscreen-icon-button>
+				</div>
+      </template>
+    </demo-snippet>
+
+    <h1>&lt;fullscreen-api&gt;</h1>
+
+    <h3>&lt;fullscreen-api&gt; is not a dom module, thus offering you a lot of flexibility</h3>
+    <demo-snippet class="centered-demo">
+      <template>
+        <style is="custom-style">
+          img.demo {
+            width: 300px;
+            height: 200px;
+            margin: 10px;
+          }
+          img.demo:-webkit-full-screen {
+            width: 100%;
+            height: auto;
+          }
+          img.demo:-moz-full-screen {
+            width: 100%;
+            height: auto;
+          }
+          img.demo:-ms-fullscreen {
+            width: 100%;
+            height: auto;
+          }
+          img.demo:full-screen {
+            width: 100%;
+            height: auto;
+          }
+          img.demo:fullscreen {
+            width: 100%;
+            height: auto;
+          }
+        </style>
+
+        <fullscreen-api id="fsapi"></fullscreen-api>
+
+        <div>
+          <button type="button" onclick="pageFullscreen()">Toggle full screen</button>
+
+          <div>
+            <img class="demo" src="ile-vierge.jpg" onclick="eventTargetFullscreen(event)" alt="L'île vierge">
+            <img class="demo" src="saint-michel.jpg" onclick="eventTargetFullscreen(event)" alt="Vue depuis le mont Saint-Michel de Saint-Rivoal">
+            <img class="demo" src="yeun-elez.jpg" onclick="eventTargetFullscreen(event)" alt="La vallée du Yeun-Elez">
+            <img class="demo" src="ploumanach.jpg" onclick="eventTargetFullscreen(event)" alt="Ploumanac'h">
+          </div>
+        </div>
+
+        <script>
+          // Toggle full screen mode for an element
+          function toggleFullscreen(element) {
+            var fsapi = document.querySelector('#fsapi');
+            fsapi.target = element;
+            fsapi.toggleFullscreen();
+          }
+
+          // Toggle full screen mode for the whole page
+          function pageFullscreen() {
+            toggleFullscreen(document.documentElement);
+          }
+
+          // Toggle full screen mode for the event's target
+          function eventTargetFullscreen(event) {
+            toggleFullscreen(event.target);
+          }
+        </script>
+      </template>
+    </demo-snippet>
+
+	</div>
+
+	<script>
+    // Detect HTML5 full screen compatibility and alert the user if not
+    if (!(document.fullscreenEnabled || 
+        document.webkitFullscreenEnabled || 
+        document.mozFullScreenEnabled ||
+        document.msFullscreenEnabled)) {
+      document.querySelector('#demoContainer').style.display = 'none';
+      document.querySelector('#noFullscreenErrorMessage').style.display = 'block';
+    }
+	</script>
+</body>
+</html>

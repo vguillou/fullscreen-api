@@ -1,179 +1,54 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="fullscreen-behavior.html">
 
 <!--
 A simple Polymer based Web Component wrapper for the HTML5 full screen API.
 
 It lets you define which element to display in full screen mode
-(via the 'target' attribute) and toggle normal/full screen
-mode by calling the 'toggleFullscreen()' method.
-Note that this method MUST be triggered directly by user interaction
-(typically in a native 'onclick' or Polymer's 'on-click' handler).
-If no 'target' is set, the whole page (more specifically
-'document.documentElement') while be displayed full screen.
+(via the `target` attribute) and toggle normal/full screen
+mode by calling the `toggleFullscreen()` method.
 
-The element also provides 2 read-only flags :
-- 'fullscreenAvailable' set to true if the browser supports
-   HTML5 full screen API (Safari on iOS does not).
-- 'fullscreen' set to true if an element is currently displayed in
+Note that this method MUST be triggered directly by user interaction
+(typically in a native `onclick` or Polymer's `on-click` handler).
+If no `target` is set, the whole page (more specifically
+`document.documentElement`) will be displayed full screen.
+
+The element also provides 2 read-only flags as attribute:
+- `fullscreenAvailable`: set to `true` if the browser supports
+   HTML5's full screen API (Safari on iOS does not).
+- `fullscreen`: set to `true` if an element is currently displayed in
    full screen mode.
 
 Usage :
-  <template is="dom-bind">
-    <fullscreen-api id="fsapi" fullscreen-available="{{fullscreenAvailable}}"></fullscreen-api>
 
-    <button type="button" onclick="goFullscreen()" hidden$="[[!fullscreenAvailable]]">Display this page in full screen mode</button>
+    <template is="dom-bind">
+      <fullscreen-api id="fsapi" fullscreen-available="{{fullscreenAvailable}}"></fullscreen-api>
 
-    <div id="errorDiv" hidden$="[[fullscreenAvailable]]">
-      Your browser does not support the HTML5 full screen API... :(
-    </div>
-  </template>
+      <button type="button" onclick="goFullscreen()" hidden$="[[!fullscreenAvailable]]">Display this page in full screen mode</button>
 
-  <script>
-    function goFullscreen() {
-      var fsapi = document.querySelector('#fsapi');
-      fsapi.toggleFullscreen();
-    }
-  </script>
+      <div id="errorDiv" hidden$="[[fullscreenAvailable]]">
+        Your browser does not support the HTML5 full screen API... :(
+      </div>
+    </template>
+
+    <script>
+      function goFullscreen() {
+        var fsapi = document.querySelector('#fsapi');
+        fsapi.toggleFullscreen();
+      }
+    </script>
 
 @element fullscreen-api
 @blurb A simple Polymer based Web Component wrapper for the HTML5 full screen API.
 @homepage https://github.com/vguillou/fullscreen-api
-@demo demo.html
+@demo demo/index.html
 -->
 <script>
-  (function () {
-    function _isFullscreenEnabled() {
-      return (document.fullscreenEnabled || 
-          document.webkitFullscreenEnabled || 
-          document.mozFullScreenEnabled ||
-          document.msFullscreenEnabled) ? true : false;
-    }
-    function _isFullscreenToggled() {
-      return (document.fullscreenElement ||
-          document.webkitFullscreenElement ||
-          document.mozFullScreenElement ||
-          document.msFullscreenElement) ? true : false;
-    }
-    function _toggleFullscreen(target) {
-      if (_isFullscreenEnabled()) {
-        if (!_isFullscreenToggled()) {
-          if (target.requestFullscreen) {
-              target.requestFullscreen();
-          } else if (target.webkitRequestFullscreen) {
-              target.webkitRequestFullscreen();
-          } else if (target.mozRequestFullScreen) {
-              target.mozRequestFullScreen();
-          } else if (target.msRequestFullscreen) {
-              target.msRequestFullscreen();
-          }
-        } else {
-          if (document.exitFullscreen) {
-              document.exitFullscreen();
-          } else if (document.webkitExitFullscreen) {
-              document.webkitExitFullscreen();
-          } else if (document.mozCancelFullScreen) {
-              document.mozCancelFullScreen();
-          } else if (document.msExitFullscreen) {
-              document.msExitFullscreen();
-          }
-        }
-      }
-    }
-
-    Polymer({
-      is: "fullscreen-api",
-      properties: {
-        /**
-         * The element to display full screen.
-         * Note that changing the target while in full screen mode will not
-         * have any effect, as toggling between display modes MUST be
-         * triggered by user interaction.
-         *
-         * @attribute target
-         * @type {Object}
-         * @default document.documentElement
-         */
-        target: {
-          type: Object,
-          value: function() { return document.documentElement; },
-          notify: true
-        },
-
-        /**
-         * Read-only flag (boolean) indicating if an element is being
-         * displayed full screen.
-         *
-         * @attribute fullscreen
-         * @type {boolean}
-         * @default false
-         */
-        fullscreen:  {
-          type: Boolean,
-          value: false,
-          notify: true,
-          readOnly: true
-        },
-
-        /**
-         * Read-only flag (boolean) indicating if full screen mode is available
-         * on the browser (Safari on iOS does not support it).
-         *
-         * @attribute fullscreenAvailable
-         * @type {boolean}
-         */
-        fullscreenAvailable:  {
-          type: Boolean,
-          value: false,
-          notify: true,
-          readOnly: true
-        }
-      },
-
-      /**
-       * Toggle between full screen and normal display mode.
-       * MUST be triggered directly by user interaction
-       * (typically in a native 'onclick' or Polymer's 'on-click' handler).
-       *
-       * @method toggleFullscreen
-       */
-      toggleFullscreen: function() {
-        _toggleFullscreen(this.target);
-      },
-
-      /**
-       * Exit full screen mode (if toggled)
-       *
-       * @method exitFullscreen
-       */
-      exitFullscreen: function() {
-        if (this.fullscreen) {
-          _toggleFullscreen(this.target);
-        }
-      },
-
-      ready: function() {
-        if (_isFullscreenEnabled()) {
-          document.addEventListener('fullscreenchange', this._fullscreenChanged.bind(this));
-          document.addEventListener('webkitfullscreenchange', this._fullscreenChanged.bind(this));
-          document.addEventListener('mozfullscreenchange', this._fullscreenChanged.bind(this));
-          document.addEventListener('MSFullscreenChange', this._fullscreenChanged.bind(this));
-        }
-        this._fullscreenChanged();
-        this._setFullscreenAvailable(_isFullscreenEnabled());
-      },
-
-      detached: function() {
-        if (_isFullscreenEnabled()) {
-          document.removeEventListener('fullscreenchange', this._fullscreenChanged);
-          document.removeEventListener('webkitfullscreenchange', this._fullscreenChanged);
-          document.removeEventListener('mozfullscreenchange', this._fullscreenChanged);
-          document.removeEventListener('MSFullscreenChange', this._fullscreenChanged);
-        }
-      },
-
-      _fullscreenChanged: function() {
-        this._setFullscreen(_isFullscreenToggled());
-      }
-    });
-  })();
+  Polymer({
+    is: "fullscreen-api",
+    
+    behaviors: [
+      Polymer.FullscreenBehavior
+    ]
+  });
 </script>
